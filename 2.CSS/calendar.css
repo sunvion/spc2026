@@ -1,38 +1,36 @@
-<style>
-    h1, h2 {
-        text-align: center;
-    }
+h1, h2 {
+    text-align: center;
+}
 
-    #calendar {
-        width: 100%;
-        border-collapse: collapse;
-    }
+#calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    #calendar th {/* #calendar th : calendar 밑에 있는 모든 th */
-                    /* #calendar > th : calendar 바로 밑에 있는 모든 th */
-        width: 14%;
-        padding: 10px;
-        background-color: #dadada;
-    }
+#calendar th {/* #calendar th : calendar 밑에 있는 모든 th */
+                /* #calendar > th : calendar 바로 밑에 있는 모든 th */
+    width: 14%;
+    padding: 10px;
+    background-color: #dadada;
+}
 
-    #calendar td {
-        text-align: center;
-        padding: 10px;
-        border: 1px solid black;
-    }
+#calendar td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid black;
+}
 
-    /* #calendar th:first-child, #calendar td:first-child {/* 처음과 끝이 아닌 칼럼을 바꾸고 싶은 경우 : th:nth-child(2) */
-    #calendar tr > *:first-child{
-        color: red;
-    }
+/* #calendar th:first-child, #calendar td:first-child {/* 처음과 끝이 아닌 칼럼을 바꾸고 싶은 경우 : th:nth-child(2) */
+#calendar tr > *:first-child{
+    color: red;
+}
 
-    /* #calendar th:last-child, 
-    #calendar td:last-child {/* 처음과 끝이 아닌 칼럼을 바꾸고 싶은 경우 : th:nth-child(2) */
-    #calendar tr > *:last-child{    
-        color: blue;
-    }
+/* #calendar th:last-child, 
+#calendar td:last-child {/* 처음과 끝이 아닌 칼럼을 바꾸고 싶은 경우 : th:nth-child(2) */
+#calendar tr > *:last-child{    
+    color: blue;
+}
 
-    img {
-        width: 100%;
-    }
-</style>
+img {
+    width: 100%;
+}
