@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tailwind + AOS Scroll Demo</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-950 text-white overflow-x-hidden">
+
+  <!-- HERO -->
+  <section class="h-screen flex flex-col justify-center items-center text-center px-6">
+    <h1 class="text-5xl md:text-7xl font-bold" data-aos="fade-up">
+      Scroll Interaction Demo
+    </h1>
+    <p class="mt-6 text-gray-400 max-w-xl" data-aos="fade-up" data-aos-delay="200">
+      TailwindCSS + AOS를 활용한 스크롤 기반 인터랙션 페이지
+    </p>
+
+    <div class="mt-10 animate-bounce text-gray-500">
+      ↓ scroll
+    </div>
+  </section>
+
+  <!-- SECTION 1 -->
+  <section class="min-h-screen flex items-center justify-center px-6">
+    <div class="grid md:grid-cols-2 gap-10 max-w-6xl w-full">
+      
+      <div data-aos="fade-right">
+        <h2 class="text-4xl font-bold mb-4">Section One</h2>
+        <p class="text-gray-400">
+          스크롤 기반 애니메이션은 사용자 몰입도를 크게 올려준다.
+        </p>
+      </div>
+
+      <div class="bg-purple-600/20 p-10 rounded-2xl" data-aos="zoom-in">
+        <div class="h-40 bg-purple-500 rounded-xl"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2 - cards -->
+  <section class="min-h-[120vh] flex flex-col justify-center px-6 py-20">
+    <h2 class="text-4xl font-bold text-center mb-16" data-aos="fade-up">
+      Feature Cards
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+      <div class="bg-gray-800 p-6 rounded-2xl" data-aos="fade-up">
+        <h3 class="text-xl font-semibold mb-2">Fast</h3>
+        <p class="text-gray-400">Tailwind 기반 UI 구성</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="150">
+        <h3 class="text-xl font-semibold mb-2">Smooth</h3>
+        <p class="text-gray-400">AOS 애니메이션 적용</p>
+      </div>
+
+      <div class="bg-gray-800 p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+        <h3 class="text-xl font-semibold mb-2">Scalable</h3>
+        <p class="text-gray-400">섹션 추가로 4000px 이상 확장 가능</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3 - timeline style -->
+  <section class="min-h-screen flex items-center px-6 bg-black/40">
+    <div class="max-w-4xl mx-auto space-y-16">
+
+      <div data-aos="fade-left">
+        <h2 class="text-3xl font-bold">Step 1</h2>
+        <p class="text-gray-400">스크롤 이벤트 감지</p>
+      </div>
+
+      <div data-aos="fade-left" data-aos-delay="150">
+        <h2 class="text-3xl font-bold">Step 2</h2>
+        <p class="text-gray-400">AOS 애니메이션 실행</p>
+      </div>
+
+      <div data-aos="fade-left" data-aos-delay="300">
+        <h2 class="text-3xl font-bold">Step 3</h2>
+        <p class="text-gray-400">UI 인터랙션 완성</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 4 - big visual -->
+  <section class="min-h-[150vh] flex items-center justify-center px-6">
+    <div class="text-center">
+      <div 
+        class="w-64 h-64 mx-auto rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 blur-xl opacity-70"
+        data-aos="zoom-in"
+      ></div>
+
+      <h2 class="text-4xl mt-10 font-bold" data-aos="fade-up">
+        Immersive Section
+      </h2>
+      <p class="text-gray-400 mt-4" data-aos="fade-up" data-aos-delay="200">
+        충분한 스크롤 공간 확보 (현재 전체 약 3000px+)
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="h-[50vh] flex items-center justify-center text-gray-500">
+    <p data-aos="fade-up">End of Demo</p>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: false,
+      offset: 120,
+    });
+  </script>
+
+</body>
+</html>
+
+<!-- 작성한 프롬프트 : tailwindcss랑 aos(animate on scroll)을 합쳐서 스크롤 기반 인터렉티브 데모 페이지를 만들 거야 최소한 2000px 이상의 height를 기본 사이즈로 잡고 예제가 많으면 3000~4000으로 더 늘려도 괜찮아 -->
