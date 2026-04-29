@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 슬라이더 트랜지션</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-family: sans-serif;
+            margin-bottom: 30px;
+        }
+
+        /* 슬라이더 전체 컨테이너 */
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        /* 이미지가 겹쳐서 나타날 영역 */
+        .slider {
+            position: relative; /* 자식 요소인 img를 absolute로 배치하기 위함 */
+            width: 100%;
+            height: 350px; /* 이미지 높이에 맞춤 */
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .slider img {
+            position: absolute; /* 모든 이미지를 한 자리에 겹침 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+            
+            /* 트랜지션 설정: 투명도(opacity)를 0.6초 동안 부드럽게 변경 */
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            z-index: 0;
+        }
+
+        /* 활성화된 이미지 스타일 */
+        .slider img.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        /* 파일 정보 및 버튼 영역 */
+        .info-panel {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .filename {
+            font-family: monospace;
+            background: #f4f4f4;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background 0.3s, opacity 0.3s;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>이미지 슬라이더</h1>
+
+    <div class="slider-container">
+        <div class="slider">
+            <img id="img1" src="images/cat1.jpg" class="active" alt="cat1">
+            <img id="img2" src="images/cat2.jpg" alt="cat2">
+            <img id="img3" src="images/cat3.jpg" alt="cat3">
+        </div>
+
+        <div class="info-panel">
+            <div class="filename" id="filename">images/cat1.jpg</div>
+            
+            <div class="buttons">
+                <button id="prevBtn">이전</button>
+                <button id="nextBtn">다음</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const imgs = document.querySelectorAll('.slider img');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const filename = document.getElementById('filename');
+
+        let index = 0;
+
+        /**
+         * 버튼의 활성화/비활성화 상태를 업데이트하는 함수
+         */
+        function updateUI() {
+            // 파일명 업데이트 (전체 경로에서 마지막 폴더/파일명만 추출)
+            const pathArray = imgs[index].src.split('/');
+            filename.textContent = pathArray.slice(-2).join('/');
+
+            // 인덱스 끝에 도달하면 버튼 비활성화
+            prevBtn.disabled = (index === 0);
+            nextBtn.disabled = (index === imgs.length - 1);
+        }
+
+        /**
+         * 슬라이드 이동 함수
+         * @param {number} direction -1(이전) 또는 1(다음)
+         */
+        function show(direction) {
+            // 현재 활성 이미지에서 active 클래스 제거
+            imgs[index].classList.remove('active');
+
+            // 인덱스 변경
+            index += direction;
+
+            // 새 이미지에 active 클래스 추가 (트랜지션 발생)
+            imgs[index].classList.add('active');
+
+            // UI 갱신
+            updateUI();
+        }
+
+        // 이벤트 리스너 연결
+        nextBtn.addEventListener('click', () => {
+            if (index < imgs.length - 1) show(1);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (index > 0) show(-1);
+        });
+
+        // 초기 화면 세팅
+        updateUI();
+    </script>
+
+</body>
+</html>

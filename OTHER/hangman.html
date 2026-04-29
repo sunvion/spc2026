@@ -1,0 +1,229 @@
+<!--
+========================================
+🎮 5 WORDS HANGMAN 설계 흐름 정리
+========================================
+
+1. 🖥️ UI 먼저 생각하기 (화면 구조)
+----------------------------------------
+- 제목: 5 Words Hangman
+- 단어 표시: _ _ _ _ _
+- 남은 기회 표시
+- 사용한 글자 표시
+- 입력창 (알파벳 1개)
+- 버튼 2개 (맞추기 / 새 게임)
+
+👉 핵심: "사용자가 무엇을 보는가?"
+
+----------------------------------------
+
+2. 🧠 상태(데이터) 정의
+----------------------------------------
+이 게임이 기억해야 하는 것:
+
+- answer   : 정답 단어 (예: APPLE)
+- display  : 현재 맞춘 상태 (_ A _ _ E)
+- used     : 사용한 알파벳 배열
+- chances  : 남은 기회 (6)
+
+👉 핵심: "게임의 기억"
+
+----------------------------------------
+
+3. ⚙️ 기능 분리 (해야 할 일 나누기)
+----------------------------------------
+
+[1] newGame()
+- 랜덤 단어 선택
+- 상태 초기화
+
+[2] guess()
+- 입력값 받기
+- 유효성 검사 (A-Z / 1글자 / 중복)
+- 정답 비교
+- 상태 업데이트
+
+[3] updateUI()
+- 화면에 상태 반영
+
+[4] checkGame()
+- 승리 조건 체크
+- 패배 조건 체크
+
+👉 핵심: "한 함수 = 한 역할"
+
+----------------------------------------
+
+4. 🔁 전체 흐름 (게임 진행 순서)
+----------------------------------------
+
+사용자 입력 발생
+        ↓
+입력 검증 (알파벳 / 중복)
+        ↓
+정답 비교
+        ↓
+state 변경 (display / used / chances)
+        ↓
+UI 업데이트
+        ↓
+게임 종료 체크
+
+👉 핵심: "입력 → 처리 → 반영"
+
+----------------------------------------
+
+5. 💡 개발 사고 방식
+----------------------------------------
+
+❌ 초보:
+"코드를 어디서부터 쓰지?"
+
+✅ 개발자:
+"이 게임은 어떤 상태가 있고
+그 상태가 어떻게 변하지?"
+
+----------------------------------------
+
+6. 🚀 핵심 한 줄 요약
+----------------------------------------
+
+👉 "상태를 정의하고 → 상태를 변경하고 → 화면을 다시 그린다"
+
+========================================
+-->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>5 Words Hangman</title>
+
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    #word {
+        font-size: 40px;
+        letter-spacing: 10px;
+        margin: 20px;
+    }
+
+    #used {
+        margin: 10px;
+        color: #555;
+    }
+
+    #message {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    input {
+        font-size: 18px;
+        width: 50px;
+        text-align: center;
+    }
+
+    button {
+        margin: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>5 Words Hangman</h1>
+
+<div id="word">_ _ _ _ _</div>
+
+<div>남은 기회: <span id="chances">6</span></div>
+
+<div id="used">사용한 글자: 없음</div>
+
+<input id="inputLetter" maxlength="1">
+<br>
+
+<button onclick="guess()">글자 맞추기</button>
+<button onclick="newGame()">새 게임</button>
+
+<div id="message"></div>
+
+<script>
+const words = ["APPLE", "GRAPE", "MANGO", "PEACH", "BERRY"];
+
+let answer = "";
+let display = [];
+let used = [];
+let chances = 6;
+
+function newGame() {
+    answer = words[Math.floor(Math.random() * words.length)];
+    display = ["_", "_", "_", "_", "_"];
+    used = [];
+    chances = 6;
+
+    updateUI();
+    document.getElementById("message").textContent = "";
+}
+
+function updateUI() {
+    document.getElementById("word").textContent = display.join(" ");
+    document.getElementById("chances").textContent = chances;
+    document.getElementById("used").textContent =
+        "사용한 글자: " + (used.length ? used.join(", ") : "없음");
+}
+
+function guess() {
+    const input = document.getElementById("inputLetter");
+    let letter = input.value.toUpperCase();
+    input.value = "";
+
+    if (!letter.match(/[A-Z]/) || letter.length !== 1) {
+        alert("알파벳 한 글자만 입력하세요!");
+        return;
+    }
+
+    if (used.includes(letter)) {
+        alert("이미 사용한 글자입니다!");
+        return;
+    }
+
+    used.push(letter);
+
+    if (answer.includes(letter)) {
+        for (let i = 0; i < answer.length; i++) {
+            if (answer[i] === letter) {
+                display[i] = letter;
+            }
+        }
+    } else {
+        chances--;
+    }
+
+    checkGame();
+    updateUI();
+}
+
+function checkGame() {
+    if (!display.includes("_")) {
+        document.getElementById("message").textContent =
+            "🎉 승리! 정답: " + answer;
+    }
+
+    if (chances <= 0) {
+        document.getElementById("message").textContent =
+            "💀 패배! 정답: " + answer;
+    }
+}
+
+newGame();
+</script>
+
+</body>
+</html>

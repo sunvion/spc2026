@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디바운스 검색 필터</title>
+    <style>
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            font-size: 18px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        li:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>실시간 검색 필터 (디바운스 적용)</h1>
+    <input type="text" id="searchInput" placeholder="과일 이름을 입력하세요...">
+    
+    <ul id="itemsList">
+        <li>Apple</li>
+        <li>Banana</li>
+        <li>Orange</li>
+        <li>Grape</li>
+        <li>Strawberry</li>
+        <li>Blueberry</li>
+        <li>Watermelon</li>
+        <li>Peach</li>
+        <li>Pear</li>
+        <li>Pineapple</li>
+        <li>Mango</li>
+        <li>Cherry</li>
+        <li>Kiwi</li>
+        <li>Lemon</li>
+        <li>Lime</li>
+        <li>Plum</li>
+        <li>Apricot</li>
+        <li>Pomegranate</li>
+        <li>Coconut</li>
+        <li>Avocado</li>
+    </ul>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const items = document.querySelectorAll('#itemsList > li');
+
+        // 실제 필터링을 수행하는 함수
+        function filterItems() {
+            const filter = searchInput.value.toLowerCase();
+            console.log(`필터링 실행: "${filter}"`); // 디바운스 작동 확인용
+
+            items.forEach((item) => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(filter) ? '' : 'none';
+            });
+        }
+
+        /**
+         * 디바운스 헬퍼 함수
+         * @param {Function} callback - 실행할 함수
+         * @param {number} delay - 대기 시간 (ms)
+         */
+        function debounce(callback, delay) {
+            let timer;
+            return function() {
+                // 이전에 설정된 타이머가 있다면 취소 (입력이 계속되면 초기화됨)
+                if (timer) clearTimeout(timer);
+                
+                // 새로운 타이머 설정
+                timer = setTimeout(() => {
+                    callback();
+                }, delay);
+            };
+        }
+
+        // debounce 함수에 filterItems를 전달하여 300ms 대기 적용
+        const handleSearch = debounce(filterItems, 300);
+
+        // input 이벤트는 keyup보다 더 정교하게 모든 입력(복붙 등)을 감지합니다.
+        searchInput.addEventListener('input', handleSearch);
+    </script>
+</body>
+</html>
