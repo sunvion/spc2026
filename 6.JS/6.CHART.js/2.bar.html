@@ -5,16 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chart.js Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <div>
         <canvas id="myChart"></canvas>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
+        const ctx = document.getElementById('myChart');
         // 📊 데이터 (그래프에 표시될 값)
         const data = {
             labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월'],

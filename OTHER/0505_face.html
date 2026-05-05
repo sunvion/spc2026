@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="300"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const context = canvas.getContext('2d'); // 캔버스 안의 공간
+
+        context.beginPath();
+        context.arc(75,75,50,0,Math.PI*2);
+        context.moveTo(65,65); // 어디로 이동했어야 했을까?
+        context.arc(60,65,5,0,Math.PI*2); // 왼쪽 눈
+        context.moveTo(95,65);
+        context.arc(90,65,5,0,Math.PI*2); // 오른쪽 눈
+        context.moveTo(110,75);
+        context.arc(75,75,35,0,Math.PI); // 입(반원)
+        context.stroke();
+        context.closePath();
+
+        // 팩맨
+        context.beginPath();
+        context.moveTo(300,100);
+
+        const startAngle = 0.4;
+        const endAngle = 2*Math.PI - 0.4
+        context.arc(300,100,50,startAngle,endAngle);
+        context.lineTo(300,100);
+
+        context.fillStyle = 'yellow';
+        context.fill();
+        
+        context.stroke();
+        context.closePath();
+    </script>
+</body>
+</html>

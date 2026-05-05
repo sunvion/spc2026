@@ -15,11 +15,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // 📊 라벨 (Utils.months 대신 직접 사용)
-        const labels = [
-            '1월', '2월', '3월', '4월', '5월', '6월',
-            '7월', '8월', '9월', '10월', '11월', '12월'
-        ];
+        const ctx = document.getElementById('myChart');
+
+        const Utils = {
+            months({ count }) {
+                const monthNames = [
+                    '1월', '2월', '3월', '4월',
+                    '5월', '6월', '7월', '8월',
+                    '9월', '10월', '11월', '12월'
+                ];
+
+                return monthNames.slice(0, count);
+            }
+        };
+
+        const labels = Utils.months({count: 7});
 
         // 📈 데이터 설정 (라인 그래프용)
         const data = {
@@ -54,19 +64,12 @@
 
         // ⚙️ 차트 설정 (bar → line으로 변경)
         const config = {
-            type: 'line',   // 📈 라인 그래프
+            type: 'line',
             data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
         };
 
         // 🚀 차트 생성
-        new Chart(document.getElementById('myChart'), config);
+        const chart1 = new Chart(ctx, config);
     </script>
 </body>
 

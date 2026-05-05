@@ -31,11 +31,14 @@
 
         function drawBarGraph(data) {
             const barWidth = 30;
-            const barHeight = data[key];
-
+            
             for (const key in data) {
-                
-                context.fillRect(startX, canvas.height - barWidth - barHeightOffset, barWidth, barHeight);
+                const barHeight = data[key];
+                context.fillStyle = 'blue';
+                context.fillRect(startX, canvas.height - barHeight - barHeightOffset, barWidth, barHeight);
+
+                context.fillStyle = 'black';
+                context.fillText(key, startX + barWidth / 2, canvas.height - 10);
                 startX += 50;
             }
         }
