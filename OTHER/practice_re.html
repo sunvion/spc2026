@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #game {
+            position: relative;
+            background-color: black;
+            width: 500px;
+            height: 500px;
+        }
+
+        #pacman {
+            position: absolute;
+            border-radius: 50%;
+            background: yellow;
+            width: 50px;
+            height: 50px;
+        }
+
+        #mouth {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background: black;
+            clip-path: polygon(100% 50%, 0 0, 0 100%);
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div id="pacman">
+            <div id="mouth"></div>
+        </div>
+    </div>
+    <script>
+        let x = 0;
+        let y = 0;
+        let dir = "right";
+        const pacman = document.getElementById("pacman");
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "ArrowRight") {
+                x = x+10;
+                dir = "right";
+            }
+
+            if (e.key === "ArrowLeft") {
+                x = x-10;
+                dir = "left";
+            }
+
+            if (e.key === "ArrowUp") {
+                y = y-10;
+                dir = "up";
+            }
+
+            if (e.key === "ArrowDown") {
+                y = y+10;
+                dir = "down";
+            }
+
+            pacman.style.left = x + "px";
+            pacman.style.top = y + "px";
+            updateDirection(dir);
+        });
+    </script>
+</body>
+</html>
