@@ -20,19 +20,20 @@ with sync_playwright() as p:
 
         link = news.locator('a').first.get_attribute('href')
         # print(f'{i+1}. {title}\n   {link}')
-
+        
         links.append({
             "title": title,
             "href": link
         })
 
-        for news in links:
-            print("-"*60)
-            print('제목: ', news['title'])
-            print('링크: ', news['href'])
+    for news in links:
+        print("-"*60)
+        print("제목: ", news["title"])
+        print("링크: ", news["href"])
 
-            # 게시물로 이동
-            page.goto(news['href'])
+        # 게시물로 이동
+        page.goto(news['href'])
 
-            # 본문 추출
-            content = page.locator('#dic_area')
+        # 본문 추출
+        content = page.locator("#dic_area").inner_text().strip()
+        print("본문: ", content)
