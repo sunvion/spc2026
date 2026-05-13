@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, jsonify
 
 # 1. /user 라는 경로를 만들고 URL 파라미터를 기반으로 사용자를 조회할 수 있게 만든다.
 #    /user는 모든 사용자 /user/1 홍길동, /user/2 김철수 등
@@ -24,6 +24,7 @@ products = {
     103: {"id": 103, "name": "Mouse", "price": 40},
     104: {"id": 104, "name": "Monitor", "price": 300},
     105: {"id": 105, "name": "Headset", "price": 150},
+    106: {"id": 106, "name": "Laptop", "price": 1500},
 }
 
 ###############################
@@ -47,7 +48,15 @@ def product():
 ###############################
 @app.route('/api/user/<id>')
 def search_user(id):
-    return jsonify()
+    # 사용자를 검색해서 
+    users = None
+    return jsonify({"result": users})
+
+@app.route('/api/product')
+def search_product():
+    # Product 를 검색해서
+    product = None
+    return jsonify({"result": product})
 
 if __name__ == "__main__":
     app.run(debug=True)

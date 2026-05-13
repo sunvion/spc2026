@@ -24,6 +24,7 @@ products = {
     103: {"id": 103, "name": "Mouse", "price": 40},
     104: {"id": 104, "name": "Monitor", "price": 300},
     105: {"id": 105, "name": "Headset", "price": 150},
+    106: {"id": 106, "name": "Laptop", "price": 1500},
 }
 
 @app.route("/")
