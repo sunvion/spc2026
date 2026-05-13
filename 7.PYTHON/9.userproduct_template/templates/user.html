@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User 검색</title>
+</head>
+<body>
+
+    <h1>User 검색</h1>
+    <!-- <form onsubmit="event.preventDefault() location.href='/user/' + document.getElementById"> -->
+        <label>사용자ID: <input type="number" id="id"></label>
+        <button type="submit">검색</button>
+    </form>
+
+    {% if user_id %}
+
+        <!-- 특정 사용자 출력 -->
+        {% set user = users.get(user_id) %}
+
+        <ul>
+            <li>
+                ID: {{ user.id }},
+                이름: {{ user.name }},
+                이메일: {{ user.email }}
+            </li>
+        </ul>
+
+    {% else %}
+
+        <!-- 전체 사용자 출력 -->
+        <ul>
+            {% for u in users.values() %}
+                <li>
+                    <a href="/user/{{ u.id }}">
+                        ID: {{ u.id }}
+                    </a>,
+                    이름: {{ u.name }},
+                    이메일: {{ u.email }}
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+
+</body>
+</html>

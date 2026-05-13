@@ -1,0 +1,53 @@
+from flask import Flask, send_from_directory, request
+
+# 1. /user 라는 경로를 만들고 URL 파라미터를 기반으로 사용자를 조회할 수 있게 만든다.
+#    /user는 모든 사용자 /user/1 홍길동, /user/2 김철수 등
+# 2. /product 로 쿼리 파라미터를 기반으로 상훔을 조회할 수 있다.
+#    /products는 모든 상품, /product?id=101로 상품 검색 ?name으로도 상품 검색
+
+app = Flask(__name__)
+
+# dict 에 dict 는 인덱싱을 통한 빠른 조회 가능 (굳이 for u in users 이런거 안해도 됨)
+# 사용자 데이터
+users = {
+    1: {"id": 1, "name": "홍길동", "email": "hong@example.com"},
+    2: {"id": 2, "name": "김철수", "email": "kim@example.com"},
+    3: {"id": 3, "name": "이영희", "email": "lee@example.com"},
+    4: {"id": 4, "name": "박민수", "email": "park@example.com"},
+    5: {"id": 5, "name": "최지우", "email": "choi@example.com"},
+}
+
+# 상품 데이터
+products = {
+    101: {"id": 101, "name": "Laptop", "price": 1200},
+    102: {"id": 102, "name": "Keyboard", "price": 80},
+    103: {"id": 103, "name": "Mouse", "price": 40},
+    104: {"id": 104, "name": "Monitor", "price": 300},
+    105: {"id": 105, "name": "Headset", "price": 150},
+}
+
+###############################
+# 정적 페이지 라우팅
+###############################
+
+@app.route("/")
+def home():
+    return send_from_directory('static', "index.html")
+
+@app.route("/user")
+def user():
+    return send_from_directory('static', "user.html")
+
+@app.route("/product")
+def product():
+    return send_from_directory('static', "product.html")
+
+###############################
+# API용 라우팅
+###############################
+@app.route('/api/user/<id>')
+def search_user(id):
+    return jsonify()
+
+if __name__ == "__main__":
+    app.run(debug=True)
