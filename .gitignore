@@ -1,5 +1,9 @@
 # 환경 설정
 .vscode
+.DS_Store
+
+# 환경변수 파일
+.env
 
 # 업로드 파일
 uploads/
