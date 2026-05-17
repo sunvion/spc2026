@@ -26,17 +26,18 @@ data = response.json()
 print(data)
 
 # csv에 저장
-with open('search_result.csv', 'w', newline="", encoding="UTF-8"):
+with open("search_result.csv", "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow({'title','video_id','video_url', 'description'})
+    writer.writerow(["title", "video_id", "video_url", "description"])
 
-for item in data['items']:
-    title = item['snippet']['title']
-    video_id = item['id']['videoId']
-    video_url = f"https://www.youtube.com/watch?v={video_id}"
-    description = item['snippet']['description']
+    for item in data['items']:
+        title = item['snippet']['title']
+        video_id = item['id']['videoId']
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
+        description = item['snippet']['description']
 
-    print(f'제목: {title}, URL: {video_url}, 설명: {description}')
-    print('-'*40)
+        print(f'제목: {title}, URL: {video_url}, 설명: {description}')
+        print('-'*40)
 
-    writer.writerow({title, video_id, video_url,description})
+        writer.writerow([title, video_id, video_url, description])
+
