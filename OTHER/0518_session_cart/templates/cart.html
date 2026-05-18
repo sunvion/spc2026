@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>장바구니</h1>
+
+<table border="1">
+    <tr>
+        <th>상품 이름</th>
+        <th>수량</th>
+        <th>가격</th>
+        <th>삭제</th>
+    </tr>
+
+    {% for item_id, item_info in cart_items.items() %}
+    <tr>
+        <td>{{ item_info.name }}</td>
+        <td>{{ item_info.quantity }}</td>
+        <td>{{ item_info.price * item_info.quantity }}</td>
+        <td>
+            <a href="{{ url_for('remove_from_cart', item_id=item_id) }}">
+                삭제
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>전체 가격: {{ total_price }}원</p>
+
+<a href="{{ url_for('products') }}">
+    상품 목록으로 돌아가기
+</a>
+
+<a href="{{ url_for('clear_cart') }}">
+    장바구니 전체 삭제
+</a>
+
+{% endblock %}
