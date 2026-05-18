@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Breed List</title>
+</head>
+<body>
+
+    <h1>강아지 Breed 목록</h1>
+
+    <button id="loadBtn">Breed 가져오기</button>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('loadBtn').addEventListener('click', () => {
+
+            fetch('https://dog.ceo/api/breeds/list/all')
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data);
+
+                    if (data.status === 'success') {
+                        displayResult(data);
+                    }
+                })
+                .catch(error => {
+                    console.error('오류 발생:', error);
+                });
+        });
+
+        function displayResult(data) {
+
+            const result = document.getElementById('result');
+
+            // breed 목록 객체 꺼내기
+            const breeds = Object.keys(data.message);
+
+            console.log(breeds);
+
+            // HTML 만들기
+            let html = '<ul>';
+
+            breeds.forEach(breed => {
+                html += `<li>${breed}</li>`;
+            });
+
+            html += '</ul>';
+
+            result.innerHTML = html;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+
+    <h2>사용자 정보 페이지</h2>
+
+    <p>
+        이름 : {{ user.name }} <br>
+        ID : {{ user.id }} <br>
+        PW : {{ user.pw }} <br>
+    </p>
+
+    <h3>비밀번호 변경</h3>
+
+    <form method="POST">
+        <label>New Password:</label>
+        <input type="password" name="new_pw">
+        <button type="submit">변경</button>
+    </form>
+
+</body>
+</html>
