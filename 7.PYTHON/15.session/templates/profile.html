@@ -21,6 +21,12 @@
         <input type="password" name="new_pw">
         <button type="submit">변경</button>
     </form>
+    {% if message %}
+        <p style="color: green;">{{ message }}</p>
+    {% endif %}
 
+    <a href="{{ url_for('welcome') }}">대시보드로 이동</a>
+    <br>
+    <a href="{{ url_for('logout') }}">로그아웃</a>
 </body>
 </html>
