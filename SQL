@@ -1,0 +1,338 @@
+create table users(id INTEGER name TEXT);
+
+.help
+
+.tables
+users
+
+.schema
+CREATE TABLE users(id INTEGER name TEXT);
+
+select *from users
+   ...> 
+   ...> 
+   ...> ;
+
+INSERT users(id, name) VALUES(1,'홍길동')
+   ...> ;
+Parse error: near "users": syntax error
+  INSERT INTO users(id, name) VALUES(1,'홍길동') ;
+         ^--- error here
+
+DROP TABLE users;
+
+CREATE TABLE users(id INTEGER, name TEXT);  
+INSERT INTO users(id, name) VALUES(1,'홍길동');
+INSERT INTO users(id, name) VALUES(2,'고길동');
+INSERT INTO users(id, name) VALUES(3,'김길동');
+INSERT INTO users(id, name) VALUES(4,'박길동');
+
+.headers
+Usage: .headers on|off
+.headers off
+SELECT*FROM users;
+1|홍길동
+2|고길동
+3|김길동
+4|박길동
+
+CREATE TABLE people(id INTEGER, first_name TEXT, last_name TEXT, age INTEGER, gender TEXT);
+CREATE TABLE people(
+    id INTEGER, 
+    first_name TEXT, 
+    last_name TEXT,
+    age INTEGER, 
+    gender TEXT
+);
+
+.schema # 넣은 모양 그대로 나옴.
+CREATE TABLE users(id INTEGER, name TEXT);
+CREATE TABLE people(id INTEGER, 
+    first_name TEXT,
+    last_name TEXT,
+    age INTEGER, 
+    gender TEXT);
+
+INSERT INTO people(id, first_name, last_name, age, gender) VALUES (1, "first1", "last1", 21, "M");
+INSERT INTO people(id, first_name, last_name, age, gender) VALUES (2, "first2", "last2", 23, "M");
+INSERT INTO people(id, first_name, last_name, age, gender) VALUES (3, "first3", "last3", 19, "F");
+INSERT INTO people(id, first_name, last_name, age, gender) VALUES (4, "first4", "last4", 22, "F");
+INSERT INTO people(id, first_name, last_name, age, gender) VALUES (5, "first5", "last5", 21, "M");
+
+SELECT*FROM people
+
+SELECT*FROM people ORDER BY age ASC; (오름차순)
+SELECT*FROM people ORDER BY age DESC; (내림차순)
+
+SELECT*FROM people LIMIT 3; (3명만)
+SELECT*FROM people LIMIT 2; (2명만)
+
+SELECT*FROM people ORDER BY age ASC LIMIT 2; 
+SELECT*FROM people ORDER BY age DESC LIMIT 2; 
+
+SELECT*FROM people LIMIT 10;
+SELECT*FROM people LIMIT 10 OFFSET 10;
+
+SELECT*FROM people LIMIT 2;
+SELECT*FROM people LIMIT 2 OFFSET 2;
+SELECT*FROM people LIMIT 2 OFFSET 4;
+
+SELECT*FROM people WHERE age=21;
+SELECT*FROM people WHERE gender='M';
+SELECT*FROM people WHERE gender='F';
+SELECT*FROM people WHERE gender='F' LIMIT 2;
+SELECT*FROM people WHERE gender='M' AND age=21;
+SELECT*FROM people WHERE gender='M' AND age=22;
+SELECT*FROM people WHERE gender='M' AND age=23;
+
+SELECT*FROM people WHERE age BETWEEN 20 AND 29;
+SELECT*FROM people WHERE age BETWEEN 10 AND 19;
+
+SELECT*FROM people WHERE age BETWEEN 20 AND 29 ORDER BY age;
+SELECT*FROM people WHERE age BETWEEN 20 AND 29 ORDER BY age DESC;
+SELECT*FROM people WHERE age BETWEEN 20 AND 29 ORDER BY age DESC LIMIT 2;
+
+SELECT*FROM people WHERE first_name = "first3";
+SELECT*FROM people WHERE first_name LIKE "first%"; # % 는 *과 같은 거임, 문자열 내에서 모든 것을 의미.
+SELECT*FROM people WHERE first_name LIKE "f%";
+SELECT*FROM people WHERE first_name LIKE "김%";
+SELECT*FROM people WHERE first_name LIKE "박%";
+SELECT*FROM people WHERE first_name LIKE "%현";
+SELECT*FROM people WHERE first_name LIKE "%수%";
+SELECT*FROM people WHERE first_name LIKE "%3";
+SELECT*FROM people WHERE first_name LIKE "%st3";
+SELECT*FROM people WHERE first_name LIKE "%ir%";
+
+SELECT DISTINCT gender from people;
+SELECT DISTINCT age from people;
+SELECT DISTINCT last_name from people;
+
+SELECT*FROM people;
+SELECT first_name, age FROM people;
+SELECT last_name, gender FROM people;
+SELECT id, age FROM people;
+
+SELECT id, age FROM people WHERE first_name="first1";
+
+=================
+
+UPDATE people SET first_name="first222" WHERE first_name="first2";
+
+SELECT*FROM people;
+
+UPDATE people SET first_name="444first" WHERE first_name="first4";
+UPDATE people SET gender="F" WHERE age=21;
+UPDATE people SET gender="M" WHERE id=5;
+
+DELETE FROM people WHERE id=4;
+
+SELECT로 검색(READ)
+INSERT로 삽입(CREATE)
+UPDATE로 수정(UPDATE)
+DELETE로 작제(DELETE)
+
+=========================================
+TRANSACTION
+
+BEGIN;
+
+INSERT INTO people(first_name, last_name, age, gender)
+VALUES('길등', '홍', 33, 'M');
+
+INSERT INTO people(first_name, last_name)
+VALUES('길동', '홍');
+
+UPDATE people
+SET id = 6
+WHERE first_name='길동'
+  AND last_name='홍';
+
+COMMIT;
+OR ROLLBACK;
+
+SELECT * FROM people;
+======================
+CREATE TABLE product(
+    name TEXT,
+    num INTEGER,
+    price INTEGER,
+    discount INTEGER
+);
+
+SELECT*FROM product;
+
+INSERT INTO product('여기에 입력할 컬럼을 다 명세') VALUES ('마우스', 7, 2500, 0);
+INSERT INTO product(name, num, price, discount) VALUES ('마우스', 7, 2500, 0);
+
+INSERT INTO product VALUES ('노트북', 2, 65000, 12000);
+INSERT INTO product VALUES ('모니터', 4, 35000, 0);
+INSERT INTO product VALUES ('프린트', 5, 8000, 2000);
+INSERT INTO product VALUES ('키보드', 4, 10000, 0);
+
+SELECT name, num, price, num*price FROM product;
+
+.mode column
+
+SELECT name, num, price, num*price AS value FROM product;
+
+.mode list
+.headers off
+
+SELECT *, price - discount FROM product;
+SELECT *, price - discount AS final_price FROM product;
+SELECT *, price - discount AS final_price FROM product ORDER BY final_price ASC;
+SELECT *, price - discount AS final_price FROM product ORDER BY final_price DESC LIMIT 1;
+UPDATE product SET discount=0 WHERE name='노트북';
+UPDATE product SET num=num-1 WHERE name='노트북';
+==========================
+CREATE TABLE exam(name TEXT, result INTEGER);
+
+INSERT INTO exam VALUES('김길동', 75);
+INSERT INTO exam VALUES('아이유', 90);
+INSERT INTO exam VALUES('싸이', 60);
+
+SELECT*FROM exam;
+SELECT name FROM exam;
+
+SELECT name, result,
+CASE
+    WHEN result > 80 THEN '합격'
+    WHEN result > 70 THEN '보류'
+    ELSE '불합격'
+END AS judgement
+FROM exam;
+=========================
+CREATE TABLE user (name TEXT, gender TEXT, city TEXT);
+
+INSERT INTO user VALUES('user1','M','서울');
+INSERT INTO user VALUES('user2','F','부산');
+INSERT INTO user VALUES('user3','M','수원');
+INSERT INTO user VALUES('user4','F','서울');
+
+SELECT*FROM user;
+SELECT COUNT(*) FROM user;
+SELECT*FROM user LIMIT 10;
+
+SELECT gender, COUNT(*) FROM user;
+SELECT gender, COUNT(*) FROM user GROUP BY gender;
+
+SELECT city, COUNT(*) FROM user GROUP BY city;
+SELECT gender, city, COUNT(*) FROM user GROUP BY gender, city;
+
+SELECT city, COUNT(*) FROM user GROUP BY city HAVING count(*)>=2;
+SELECT city, COUNT(*) FROM user WHERE city='서울' GROUP BY city;
+SELECT city, COUNT(*) FROM user WHERE city='서울' GROUP BY city HAVING count(*)>=2;
+
+=========================================
+CREATE TABLE store(branch TEXT, sales INTEGER);
+
+INSERT INTO store VALUES('서울',150);
+INSERT INTO store VALUES('부산',450);
+INSERT INTO store VALUES('대구',300);
+INSERT INTO store VALUES('서울',250);
+
+SELECT SUM(sales), TOTAL(sales) FROM store;
+
+SELECT branch, SUM(sales) FROM store GROUP BY branch;
+SELECT branch, SUM(sales), AVG(sales), MIN(sales), MAX(sales) FROM store GROUP BY branch;
+=========================
+sqlite3 company.db
+
+CREATE TABLE employee(
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    dept_id INTEGER
+);
+
+INSERT INTO employee VALUES('user1', 1);
+INSERT INTO employee(name,dept_id) VALUES('user1', 1);
+INSERT INTO employee(name,dept_id) VALUES('user2', 3);
+INSERT INTO employee(name,dept_id) VALUES('user3', 1);
+INSERT INTO employee(name,dept_id) VALUES('user4', 2);
+INSERT INTO employee(name,dept_id) VALUES('user5', 2);
+
+SELECT*FROM employee;
+
+CREATE TABLE dept(
+    id INTEGER PRIMARY KEY,
+    name TEXT
+);
+
+INSERT INTO dept(name) VALUES ('영업팀');
+INSERT INTO dept(name) VALUES ('개발팀');
+INSERT INTO dept(name) VALUES ('인사팀');
+
+SELECT*FROM employee INNER JOIN dept ON employee.dept_id = dept.id;
+SELECT employee.id, employee.name, dept.name FROM employee INNER JOIN dept ON employee.dept_id = dept.id;
+
+INSERT INTO employee VALUES(6,'user6',4);
+
+SELECT*FROM employee;
+
+SELECT*FROM employee LEFT OUTER JOIN dept ON employee.dept_id=dept.id;
+SELECT*FROM employee LEFT JOIN dept ON employee.dept_id=dept.id;
+======================
+
+
+======================
+
+csv 파일을 vs 코드 하단의 인코딩 유형 눌러서 reopen 이용하여 읽고 다시 저장하여 사용하기.
+
+(py312) C:\Users\NT551XED\Downloads>sqlite3 bike.db
+SQLite version 3.51.2 2026-01-09 17:27:48
+Enter ".help" for usage hints.
+
+.mode csv
+
+.import bike_202512.csv rentals
+
+.schema
+
+CREATE TABLE IF NOT EXISTS "rentals"(
+"대여일자" TEXT, "대여시간" TEXT, "대여소번호" TEXT, "대여소명" TEXT,
+ "대여구분코드" TEXT, "성별" TEXT, "연령대코드" TEXT, "이용건수" TEXT,
+ "운동량" TEXT, "탄소량" TEXT, "이동거리(M)" TEXT, "이용시간(분)" TEXT);
+
+.tables
+
+SELECT COUNT(*) FROM rentals;
+SELECT*FROM rentals LIMIT 10;
+SELECT DISTINCT 연령대코드 FROM rentals;
+SELECT 연령대코드, COUNT(*) FROM rentals GROUP BY 연령대코드;
+SELECT DISTINCT 대여소명 FROM rentals WHERE 대여소명 LIKE "%효창공원앞역%";
+SELECT COUNT(*) FROM rentals WHERE 대여소명 LIKE "%효창공원앞역%";
+
+성별 분포, 연령대 분포, 시간대별 데이터수, 이동거리 top10, 이동시간 top10, 크리스마스 하루의 통계, MIN/MAX/AVG 등등
+SELECT 성별, COUNT(*) FROM rentals GROUP BY 성별;
+SELECT 연령대코드, COUNT(*) FROM rentals GROUP BY 연령대코드;
+SELECT 대여시간, COUNT(*) FROM rentals GROUP BY 대여시간;
+
+DROP TABLE IF EXISTS rentals;
+
+CREATE TABLE rentals (
+    대여일자 TEXT,
+    대여시간 INTEGER,
+    대여소번호 INTEGER,
+    대여소명 TEXT,
+    대여구분코드 TEXT,
+    성별 TEXT,
+    연령대코드 TEXT,
+    이용건수 INTEGER,
+    운동량 REAL,
+    탄소량 REAL,
+    "이동거리(M)" REAL,
+    "이용시간(분)" INTEGER
+);
+
+.headers on
+.mode csv
+
+.import bike_202512.csv rentals
+
+PRAGMA table_info(rentals);
+
+SELECT "이용시간(분)", "이동거리(M)"FROM rentals ORDER BY "이용시간(분)" DESC LIMIT 20;
+SELECT * FROM rentals ORDER BY "이용시간(분)" DESC LIMIT 20;
+
+DELETE FROM rentals
+WHERE 대여일자 = '대여일자';

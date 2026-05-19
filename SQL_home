@@ -1,0 +1,36 @@
+SELECT*FROM customers;
+하기 전에 꼭 숫자를 확인하는 것이 필요함.
+
+SELECT COUNT(*) FROM customers;
+
+SELECT*FROM customers LIMIT 10;
+
+SELECT DISTINCT Country FROM customers;
+
+SELECT*FROM customers WHERE Country="USA";
+
+SELECT*FROM customers WHERE Country!="USA";
+
+전체 이름, 고객ID, 국가
+
+SELECT lastname ||" "|| firstname AS fullname, customerid, Country from customers WHERE Country!="USA";
+
+3. 브라질 고객들의 invoice.sql 브라질 고객의 송장을 보여주는 쿼리를 제공, 결과 테이블에는 고객의 전체 이름, 송장 ID, 송장 날짜 및 청구 국가 표시
+
+FROM Invoice Country = Brazil
+
+SELECT firstname ||" "|| lastname AS fullname, invoiceid, invoicedate, 청구국가
+
+고객(customers) 테이블과 영수증(invoice) JOIN
+
+customers.customerid=invoice.customerid
+SELECT firstname ||" "|| lastname AS fullname, i.invoiceid, i.invoicedate, i.billingcountry FROM customers c JOIN invoices i ON c.customerid=i.customerid WHERE c.country = 'Brazil'
+================
+# 4
+sales_agents, 판매 대리인인 직원만 표시
+.tables
+.schema employees
+
+SELECT COUNT(*) FROM employees;
+SELECT*FROM employees WHERE title LIKE "%sales%";
+SELECT firstname ||" "|| lastname FROM employees WHERE title LIKE "%sales%";
