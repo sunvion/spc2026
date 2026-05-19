@@ -75,7 +75,7 @@ def products():
 @app.route('/add_to_cart/<item_id>')
 def add_to_cart(item_id):
     # ✅ 로그인 체크 추가 (핵심)
-    if 'user_id' not in session:
+    if 'user' not in session:
         return redirect(url_for('login'))
     
     print("장바구니에 담을 상품: ", item_id)
@@ -96,7 +96,7 @@ def add_to_cart(item_id):
 @app.route('/cart')
 def view_cart():
      # ✅ 로그인 체크 추가
-    if 'user_id' not in session:
+    if 'user' not in session:
         return redirect(url_for('login'))
     
     cart_items = {}
