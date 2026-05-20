@@ -1,0 +1,8 @@
+CREATE TABLE board (
+    id INTEGER ...
+    title VARCHAR(50)
+    message VARCHAR(200)
+)
+
+INSERT INTO board(...) VALUES(...)
+INSERT INTO board(...) VALUES(...)
