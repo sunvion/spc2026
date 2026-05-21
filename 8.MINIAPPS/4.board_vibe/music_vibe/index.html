@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Vibe</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <h1 onclick="location.href='index.html'">Music Vibe</h1>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="toplikes.html">Top Likes</a>
+            <a href="hashtags.html">Hashtags</a>
+            <a href="login.html" id="authLink">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="search-container">
+            <form class="search-box" onsubmit="event.preventDefault(); renderMusic();">
+                <input type="text" id="searchInput" class="search-input" placeholder="제목, 아티스트, #hashtag 로 검색" />
+                <button type="submit" class="search-btn">🔍</button>
+            </form>
+        </div>
+        <section class="music-grid" id="musicGrid"></section>
+    </main>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // 초기 렌더링
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            renderMusic();
+        });
+    </script>
+</body>
+</html>

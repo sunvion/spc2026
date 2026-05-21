@@ -1,0 +1,153 @@
+/* style.css - 현대적인 다크 테마와 글래스모피즘 디자인 */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #1a1a2e, #16213e);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --accent: #ff4d5a;
+  --font-family: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+nav a {
+  margin-left: 1.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+.search-bar {
+  margin: 1rem 2rem;
+}
+
+.search-bar input {
+  width: 80%;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-bar button {
+  padding: 0.6rem 1.2rem;
+  margin-left: 0.5rem;
+  border: none;
+  border-radius: 30px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-bar button:hover {
+  background: #e04451;
+}
+
+.music-list {
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.music-item {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s;
+}
+
+.music-item:hover {
+  transform: translateY(-4px);
+}
+
+.music-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.music-item h3 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+
+.music-item p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.hashtag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  margin: 2px;
+  color: var(--text-primary);
+}
+
+.like-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.like-button.liked {
+  color: var(--accent);
+}
+
+footer {
+  margin-top: auto;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(0,0,0,0.2);
+}

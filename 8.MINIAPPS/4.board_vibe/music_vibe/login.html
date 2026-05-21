@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Music Vibe</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <h1 onclick="location.href='index.html'">Music Vibe</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="toplikes.html">Top Likes</a>
+            <a href="hashtags.html">Hashtags</a>
+            <a href="login.html" class="active">Login</a>
+        </nav>
+    </header>
+    <main>
+        <div class="auth-container">
+            <h2>Login</h2>
+            <form class="auth-form" id="loginForm">
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="loginId" placeholder="아이디" required />
+                </div>
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="loginPw" placeholder="비밀번호" required />
+                </div>
+                <button type="submit" class="auth-submit">로그인</button>
+                <p class="error-msg" id="loginError"></p>
+            </form>
+            <div class="auth-hint">
+                <p>데모 계정:</p>
+                <p><strong>아이디:</strong> user1 / <strong>비밀번호:</strong> password</p>
+                <p><strong>아이디:</strong> user2 / <strong>비밀번호:</strong> password</p>
+            </div>
+        </div>
+    </main>
+    <script src="js/auth.js"></script>
+    <script src="js/db.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('loginId').value.trim();
+            const pw = document.getElementById('loginPw').value.trim();
+            const success = login(id, pw);
+            if (!success) {
+                document.getElementById('loginError').textContent = '아이디 혹은 비밀번호가 올바르지 않습니다.';
+                document.getElementById('loginError').style.display = 'block';
+            } else {
+                // 로그인 성공 시 홈으로 이동
+                location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

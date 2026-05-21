@@ -1,0 +1,986 @@
+/* ----------------------------------------------------
+   BOARD VIBE - Premium CSS Design System
+   Designed with HSL Colors, Glassmorphism, & Fluid Animations
+------------------------------------------------------- */
+
+:root {
+    /* HSL 컬러 시스템 정의 */
+    --bg-base: hsl(246, 44%, 7%);
+    --bg-surface: rgba(20, 18, 38, 0.45);
+    --bg-surface-solid: hsl(245, 35%, 12%);
+    --bg-input: rgba(10, 9, 21, 0.65);
+    
+    --primary: hsl(239, 84%, 67%);      /* Neon Indigo */
+    --primary-glow: rgba(99, 102, 241, 0.25);
+    --accent: hsl(189, 94%, 43%);       /* Electric Cyan */
+    --accent-glow: rgba(6, 182, 212, 0.25);
+    --danger: hsl(350, 89%, 60%);       /* Coral Red */
+    --danger-glow: rgba(239, 68, 68, 0.25);
+    
+    --text-main: hsl(210, 40%, 98%);    /* Off-white */
+    --text-muted: hsl(215, 20%, 75%);   /* Soft Gray */
+    --text-meta: hsl(217, 15%, 55%);    /* Dimmed Gray */
+    
+    --border-glass: rgba(99, 102, 241, 0.15);
+    --border-glass-active: rgba(6, 182, 212, 0.45);
+    
+    --font-sans: 'Pretendard', 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 테크 감성의 미세 격자 백그라운드 오버레이 */
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 45px 45px;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* 기본 브라우저 초기화 및 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 커스텀 스크롤바 디자인 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* ==========================================================================
+   배경 데코레이션 네온 오버레이 원형 (Floating Glow Circles)
+   ========================================================================== */
+.bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.45;
+}
+
+.bg-glow-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    animation: floatGlow 12s infinite alternate ease-in-out;
+}
+
+.bg-glow-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 45vw;
+    height: 45vw;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    animation: floatGlow 15s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 30px) scale(1.15); }
+}
+
+/* ==========================================================================
+   글래스모피즘(Glassmorphism) 공통 클래스
+   ========================================================================== */
+.glass-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+    transition: var(--transition-smooth);
+}
+
+/* 전체 컨테이너 */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   헤더 영역 스타일링
+   ========================================================================== */
+.app-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.logo-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    color: var(--accent);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+    animation: pulseLogo 3s infinite ease-in-out;
+}
+
+.logo-text {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--text-main) 30%, var(--primary) 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-text span {
+    background: linear-gradient(135deg, var(--primary) 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.app-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+@keyframes pulseLogo {
+    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px var(--accent-glow)); }
+    50% { transform: scale(1.1) rotate(15deg); filter: drop-shadow(0 0 15px var(--accent)); }
+}
+
+/* ==========================================================================
+   입력 폼 영역 (Form Section)
+   ========================================================================== */
+.form-section {
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto 3rem auto;
+}
+
+.form-card {
+    padding: 2.5rem;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 1rem;
+}
+
+.header-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--primary);
+}
+
+.card-header h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.board-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.input-label-icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--primary);
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    padding-right: 4.5rem; /* 글자수 카운터 공간 확보 */
+    background: var(--bg-input);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.form-group textarea {
+    padding-right: 1.25rem; /* 텍스트에어리어는 글자 카운터 하단 고정 */
+    resize: none;
+}
+
+.form-group input:hover, 
+.form-group textarea:hover {
+    border-color: rgba(99, 102, 241, 0.35);
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--primary);
+    background: rgba(10, 9, 21, 0.85);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* 글자수 카운터 */
+.char-counter {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-meta);
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+.form-group input + .char-counter {
+    bottom: 50%;
+    transform: translateY(50%);
+}
+
+.char-counter.warning {
+    color: var(--accent);
+}
+
+.char-counter.danger {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+/* 프리미엄 등록 버튼 */
+.submit-button {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, hsl(239, 84%, 55%) 100%);
+    border: none;
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px var(--primary-glow);
+    transition: var(--transition-bounce);
+}
+
+.submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: 0.5s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+    background: linear-gradient(135deg, hsl(239, 84%, 72%) 0%, var(--primary) 100%);
+}
+
+.submit-button:hover::before {
+    left: 100%;
+}
+
+.submit-button:active {
+    transform: translateY(1px);
+}
+
+.btn-arrow-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: var(--transition-bounce);
+}
+
+.submit-button:hover .btn-arrow-icon {
+    transform: translateX(4px);
+}
+
+/* 등록 버튼 내 스피너 스타일 */
+.btn-loader {
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--text-main);
+    animation: btnSpin 0.8s linear infinite;
+}
+
+@keyframes btnSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   구분선 및 스태츠 뱃지
+   ========================================================================== */
+.section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1.5rem 0 3.5rem 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-glass), transparent);
+}
+
+.posts-count-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid var(--border-glass);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.badge-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--accent);
+}
+
+#posts-count {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   게시글 그리드 및 카드뷰 스타일링
+   ========================================================================== */
+.posts-section {
+    width: 100%;
+}
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+    width: 100%;
+}
+
+/* 개별 카드 뷰 */
+.post-card {
+    position: relative;
+    padding: 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 260px;
+    background: rgba(22, 20, 42, 0.45);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border-radius: 20px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    animation: slideUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    transition: var(--transition-bounce);
+    overflow: hidden;
+}
+
+/* 마스크 기법을 적용한 울트라 프리미엄 1.5px 그라데이션 스마트 테두리 */
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(6, 182, 212, 0.15) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+    z-index: 2;
+}
+
+.post-card:hover {
+    transform: translateY(-8px);
+    background: rgba(28, 25, 54, 0.65);
+    box-shadow: 
+        0 20px 40px rgba(99, 102, 241, 0.12),
+        0 8px 24px rgba(6, 182, 212, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.post-card:hover::before {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+/* 카드 상단 헤더 (삭제/수정 버튼 배치) */
+.post-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.post-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.45;
+    word-break: break-all;
+    transition: var(--transition-smooth);
+}
+
+/* 카드 우측 상단 액션 그룹 */
+.card-actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+/* 프리미엄 카드 액션 버튼 공통 */
+.delete-btn, .edit-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-meta);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+}
+
+.edit-btn:hover {
+    background: rgba(99, 102, 241, 0.12);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 0 12px var(--primary-glow);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.delete-btn:hover {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: var(--danger);
+    color: var(--danger);
+    box-shadow: 0 0 12px var(--danger-glow);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.delete-icon, .edit-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* 카드 본문 메시지 */
+.post-card-body {
+    flex: 1;
+    margin-bottom: 1.75rem;
+}
+
+.post-card-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    word-break: break-all;
+    white-space: pre-wrap; /* 줄바꿈 렌더링 */
+}
+
+/* 카드 푸터 */
+.post-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.post-date-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-meta);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.clock-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+/* ==========================================================================
+   상태별 전용 뷰 (Empty, Loading, Skeleton)
+   ========================================================================== */
+
+/* 비어있을 때의 디자인 */
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: var(--bg-surface);
+    border: 1px dashed var(--border-glass);
+    border-radius: 20px;
+    max-width: 600px;
+    margin: 2rem auto;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.empty-illustration {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.empty-icon {
+    width: 2rem;
+    height: 2rem;
+    color: var(--primary);
+}
+
+.empty-state h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--text-meta);
+    font-size: 0.9rem;
+}
+
+/* 스켈레톤 로더 */
+.posts-loader {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+    width: 100%;
+}
+
+.skeleton-card {
+    height: 250px;
+    background: var(--bg-surface-solid);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   애니메이션 효과 키프레임 정의
+   ========================================================================== */
+
+/* 신규 추가 시 나타나는 애니메이션 (Slide & Fade in) */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 삭제 시 사라지는 애니메이션 (Fade out & Shrink) */
+.post-card.fade-out {
+    animation: fadeOut 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards !important;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.92) translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ==========================================================================
+   토스트(Toast) 메시지 스타일링
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 1000;
+}
+
+.toast {
+    background: rgba(15, 14, 25, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    min-width: 300px;
+    max-width: 450px;
+}
+
+.toast-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* 토스트 종류별 컬러 */
+.toast-success {
+    border-left: 4px solid var(--accent);
+}
+.toast-success .toast-icon {
+    color: var(--accent);
+}
+
+.toast-error {
+    border-left: 4px solid var(--danger);
+}
+.toast-error .toast-icon {
+    color: var(--danger);
+}
+
+.toast-message {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.toast.fade-out {
+    animation: toastOut 0.3s ease forwards;
+}
+
+@keyframes toastOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px) scale(0.9);
+    }
+}
+
+/* ==========================================================================
+   푸터 영역 스타일링
+   ========================================================================== */
+.app-footer {
+    margin-top: auto;
+    padding: 4rem 0 1rem 0;
+    text-align: center;
+}
+
+.app-footer p {
+    color: var(--text-meta);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   반응형 브레이크포인트 디자인 (Responsive Design)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 2rem 1rem;
+    }
+    
+    .app-header {
+        margin-bottom: 2.5rem;
+    }
+    
+    .logo-text {
+        font-size: 2rem;
+    }
+    
+    .form-card {
+        padding: 1.75rem;
+    }
+    
+    .submit-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .toast-container {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+    
+    .toast {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   인라인 실시간 편집기 스타일 (Inline Live Editor Styles)
+   ========================================================================== */
+
+/* 수정 모드 활성화 시 기존 컨텐츠 숨김 */
+.post-card.editing .post-card-header,
+.post-card.editing .post-card-body,
+.post-card.editing .post-card-footer {
+    display: none !important;
+}
+
+/* 수정 폼 레이아웃 */
+.card-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+.edit-form-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.2rem;
+}
+
+.edit-header-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+}
+
+.edit-header-icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--accent);
+}
+
+.edit-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.edit-input-group label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-meta);
+}
+
+.edit-title-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(10, 9, 21, 0.8);
+    border: 1px solid var(--border-glass);
+    border-radius: 10px;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.edit-message-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(10, 9, 21, 0.8);
+    border: 1px solid var(--border-glass);
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    outline: none;
+    resize: none;
+    min-height: 110px;
+    transition: var(--transition-smooth);
+}
+
+.edit-title-input:focus,
+.edit-message-textarea:focus {
+    border-color: var(--accent);
+    background: rgba(10, 9, 21, 0.95);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* 수정 액션 버튼 그룹 */
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.edit-btn-pill {
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: var(--transition-bounce);
+}
+
+.edit-save-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    border: none;
+    color: var(--text-main);
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.edit-save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(6, 182, 212, 0.3);
+}
+
+.edit-cancel-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+}
+
+.edit-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+.edit-btn-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+}
+
