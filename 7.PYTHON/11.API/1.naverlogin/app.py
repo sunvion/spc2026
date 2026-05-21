@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, session, url_for
 from dotenv import load_dotenv
 import requests
 import os
@@ -10,10 +10,12 @@ client_secret = os.getenv('NAVER_CLIENT_SECRET')
 callback_uri = os.getenv('NAVER_REDIRECT_URI')
 
 app = Flask(__name__)
+app.secret_key = os.getenv('MY_SESSION_KEY')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    user = session.get('user')
+    return render_template('index.html', user=user)
 
 @app.route('/api/naver/callback')
 def naver_callback():
@@ -32,7 +34,16 @@ def naver_callback():
     print(access_token)
 
     # 나와 사용자에 대한 검증이 끝나고 네이버와 대화할 수 있는 인증 토큰(access_token)을 받아와서 이걸로 사용자의 정보를 물어본다.
+    profile_url = {
+        f'{https://openai.naver.com/v1/nid/me}'
+    }
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    profile = requests.get(profile_url, headers=headers).json()
+    print('서버측 사용자 정보 응답: ', profile)
     # 필수 동의항목은 다 받아오고 선택 동의항목은 사용자가 동의하고 가입했다면 받아올 수 있음. 동의하지 않았다면 받아올 수 없음.
+    session['user'] = profile['response']
+
     return "인증은 일단 성공, 당신이 누구인지는 모름."
 
 @app.route('/login')
@@ -47,7 +58,10 @@ def naver_login():
     print(auth_url)
     return redirect(auth_url)
 
-    return "네이버로 보내기"
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
