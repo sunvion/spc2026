@@ -1,0 +1,79 @@
+/* 전체 배경 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* 중앙 정렬 컨테이너 */
+.container {
+    width: 400px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+}
+
+/* 채팅 출력 영역 */
+#result {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fafafa;
+}
+
+/* 사용자 입력 폼 */
+#user-input-form {
+    display: flex;
+    gap: 10px;
+}
+
+/* 입력창 */
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+/* 버튼 */
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #4a90e2;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #357abd;
+}
+
+/* 메시지 스타일 */
+#result p {
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin: 5px 0;
+}
+
+/* 사용자 메시지 */
+.user {
+    text-align: right;
+    background: #d9f0ff;
+}
+
+/* 챗봇 메시지 */
+.bot {
+    text-align: left;
+    background: #eee;
+}
