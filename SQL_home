@@ -1,7 +1,18 @@
-SELECT*FROM customers;
-하기 전에 꼭 숫자를 확인하는 것이 필요함.
+SQL 문법 순서!!
+
+SELECT
+FROM
+JOIN
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+LIMIT
 
 SELECT COUNT(*) FROM customers;
+
+SELECT*FROM customers;
+하기 전에 꼭 숫자를 확인하는 것이 필요함.
 
 SELECT*FROM customers LIMIT 10;
 
@@ -34,3 +45,257 @@ sales_agents, 판매 대리인인 직원만 표시
 SELECT COUNT(*) FROM employees;
 SELECT*FROM employees WHERE title LIKE "%sales%";
 SELECT firstname ||" "|| lastname FROM employees WHERE title LIKE "%sales%";
+
+1. **non_usa_customers.sql**
+
+   * **Original:** Provide a query showing Customers (just their full names, customer ID and country) who are not in the US.
+   * **한글 해석:** 미국(US)에 거주하지 않는 고객들의 전체 이름, 고객 ID, 국가만 조회하는 쿼리를 작성하시오.
+SELECT COUNT(*) FROM customers;
+SELECT*FROM customers;
+SELECT*FROM customers WHERE Country="USA";
+SELECT*FROM customers WHERE Country!="USA";
+
+2. **brazil_customers.sql**
+
+   * **Original:** Provide a query only showing the Customers from Brazil.
+   * **한글 해석:** 브라질(Brazil) 고객만 조회하는 쿼리를 작성하시오.
+SELECT*FROM customers;
+SELECT*FROM customers WHERE Country="Brazil";
+
+3. **brazil_customers_invoices.sql**
+
+   * **Original:** Provide a query showing the Invoices of customers who are from Brazil. The resultant table should show the customer's full name, Invoice ID, Date of the invoice and billing country.
+   * **한글 해석:** 브라질 고객들의 인보이스를 조회하는 쿼리를 작성하시오. 결과에는 고객 전체 이름, 인보이스 ID, 인보이스 날짜, 청구 국가가 포함되어야 한다.
+customers.customerid=invoice.customerid
+SELECT firstname ||" "|| lastname AS fullname, i.invoiceid, i.invoicedate, i.billingcountry FROM customers c JOIN invoices i ON c.customerid=i.customerid WHERE c.country = 'Brazil'
+
+4. **sales_agents.sql**
+
+   * **Original:** Provide a query showing only the Employees who are Sales Agents.
+   * **한글 해석:** Sales Agent인 직원만 조회하는 쿼리를 작성하시오.
+.tables
+.schema employees
+SELECT COUNT(*) FROM employees;
+SELECT*FROM employees WHERE title LIKE "%sales%";
+SELECT firstname ||" "|| lastname FROM employees WHERE title LIKE "%sales%" AND title LIKE '%agent%';
+
+5. **unique_invoice_countries.sql**
+
+   * **Original:** Provide a query showing a unique/distinct list of billing countries from the Invoice table.
+   * **한글 해석:** Invoice 테이블에서 청구 국가(Billing Country)의 중복 없는 목록을 조회하는 쿼리를 작성하시오.
+.tables
+.schema invoices
+
+SELECT DISTINCT billingcountry FROM invoices;
+
+6. **sales_agent_invoices.sql**
+
+   * **Original:** Provide a query that shows the invoices associated with each sales agent. The resultant table should include the Sales Agent's full name.
+   * **한글 해석:** 각 Sales Agent와 연관된 인보이스를 조회하는 쿼리를 작성하시오. 결과에는 Sales Agent의 전체 이름이 포함되어야 한다.
+SELECT e.firstname ||" "|| e.lastname AS ename, i.*
+FROM invoices i
+JOIN customers c ON i.CustomerId = c.CustomerId 
+JOIN employees e ON c.SupportRepId = e.EmployeeId 
+WHERE e.title LIKE "%sales%" AND e.title LIKE '%agent%';
+
+7. **invoice_totals.sql**
+
+   * **Original:** Provide a query that shows the Invoice Total, Customer name, Country and Sale Agent name for all invoices and customers.
+   * **한글 해석:** 모든 인보이스와 고객에 대해 인보이스 총액, 고객 이름, 국가, Sales Agent 이름을 조회하는 쿼리를 작성하시오.
+.schema invoices
+SELECT i.total, c.firstname ||" "|| c.lastname AS cname, c.country, e.firstname ||" "|| e.lastname AS ename
+FROM invoices i
+JOIN customers c ON i.CustomerId = c.CustomerId 
+JOIN employees e ON c.SupportRepId = e.EmployeeId 
+WHERE e.title LIKE "%sales%" AND e.title LIKE '%agent%';
+
+8. **total_invoices_{year}.sql**
+
+   * **Original:** How many Invoices were there in 2009 and 2011?
+   * **한글 해석:** 2009년과 2011년에 각각 몇 개의 인보이스가 있었는지 조회하는 쿼리를 작성하시오.
+SELECT COUNT(*) FROM invoices
+WHERE (InvoiceDate >= '2009-01-01' AND InvoiceDate < '2009-12-31') OR (InvoiceDate >= '2011-01-01' AND InvoiceDate < '2011-12-31');
+
+9. **total_sales_{year}.sql**
+
+   * **Original:** What are the respective total sales for each of those years?
+   * **한글 해석:** 해당 연도(2009년, 2011년)의 총 매출액을 각각 조회하는 쿼리를 작성하시오.
+SELECT SUM(total) FROM invoices
+WHERE (InvoiceDate >= '2009-01-01' AND InvoiceDate < '2009-12-31') OR (InvoiceDate >= '2011-01-01' AND InvoiceDate < '2011-12-31');
+
+10. **invoice_37_line_item_count.sql**
+
+    * **Original:** Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for Invoice ID 37.
+    * **한글 해석:** InvoiceLine 테이블에서 Invoice ID가 37인 인보이스의 라인 아이템 개수를 COUNT하는 쿼리를 작성하시오.
+SELECT COUNT(*) FROM invoice_item WHERE invoiceid = 37;
+
+11. **line_items_per_invoice.sql**
+
+    * **Original:** Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for each Invoice. HINT: GROUP BY
+    * **한글 해석:** InvoiceLine 테이블에서 각 인보이스별 라인 아이템 개수를 COUNT하는 쿼리를 작성하시오. (힌트: GROUP BY 사용)
+SELECT COUNT(*) FROM invoice_items GROUP BY invoiceid;
+SELECT invoiceid, COUNT(*) FROM invoice_items GROUP BY invoiceid;
+
+12. **line_item_track.sql**
+
+    * **Original:** Provide a query that includes the purchased track name with each invoice line item.
+    * **한글 해석:** 각 인보이스 라인 아이템에 구매한 트랙 이름을 포함하여 조회하는 쿼리를 작성하시오.
+SELECT i.invoiceid, i.invoicelineid, t.name AS TrackName FROM invoice_items i
+JOIN tracks t ON i.trackid = t.trackid;
+
+13. **line_item_track_artist.sql**
+
+    * **Original:** Provide a query that includes the purchased track name AND artist name with each invoice line item.
+    * **한글 해석:** 각 인보이스 라인 아이템에 구매한 트랙 이름과 아티스트 이름을 함께 조회하는 쿼리를 작성하시오.
+SELECT i.invoiceid, i.invoicelineid, t.name AS TrackName, st.name FROM invoice_items i
+JOIN tracks t ON i.trackid = t.trackid
+JOIN albums a ON t.albumid = a.albumid
+JOIN artists st ON a.artistid = st.artistid;
+
+14. **country_invoices.sql**
+
+    * **Original:** Provide a query that shows the # of invoices per country. HINT: GROUP BY
+    * **한글 해석:** 국가별 인보이스 개수를 조회하는 쿼리를 작성하시오. (힌트: GROUP BY 사용)
+SELECT billingcountry, COUNT(*) FROM invoices GROUP BY billingcountry;
+
+15. **playlists_track_count.sql**
+
+    * **Original:** Provide a query that shows the total number of tracks in each playlist. The Playlist name should be include on the resultant table.
+    * **한글 해석:** 각 플레이리스트에 포함된 총 트랙 수를 조회하는 쿼리를 작성하시오. 결과에는 플레이리스트 이름이 포함되어야 한다.
+SELECT p.name FROM playlists p, COUNT GROUP BY t.trackid
+JOIN tracks t ON p.trackid = t.trackid;
+=====================
+SELECT p.name AS PlaylistName,
+       COUNT(pt.trackid) AS TrackCount
+FROM playlists p
+JOIN playlist_track pt 
+    ON p.playlistid = pt.playlistid
+GROUP BY p.playlistid, p.name;
+======================
+16. **tracks_no_id.sql**
+
+    * **Original:** Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre.
+    * **한글 해석:** 모든 트랙을 조회하되 ID는 표시하지 않는 쿼리를 작성하시오. 결과에는 앨범 이름, 미디어 타입, 장르가 포함되어야 한다.
+SELECT a.title AS atitle, m.name AS mtname, g.name AS gename FROM tracks t
+JOIN albums a ON t.albumid = a.albumid
+JOIN media_types m ON t.mediatypeid = m.mediatypeid
+JOIN genres g ON t.genreid = g.genreid;
+
+17. **invoices_line_item_count.sql**
+
+    * **Original:** Provide a query that shows all Invoices but includes the # of invoice line items.
+    * **한글 해석:** 모든 인보이스를 조회하면서 각 인보이스의 라인 아이템 개수를 포함하는 쿼리를 작성하시오.
+
+18. **sales_agent_total_sales.sql**
+
+    * **Original:** Provide a query that shows total sales made by each sales agent.
+    * **한글 해석:** 각 Sales Agent가 만든 총 매출액을 조회하는 쿼리를 작성하시오.
+SELECT e.firstname ||" "|| e.lastname, SUM(i.total) AS total FROM employees e
+JOIN customers c ON c.SupportRepId = e.EmployeeId 
+JOIN invoices i ON i.CustomerId = c.CustomerId 
+WHERE e.title LIKE "%sales%" AND title LIKE '%agent%'
+GROUP BY e.EmployeeId;
+
+19. **top_2009_agent.sql**
+
+    * **Original:** Which sales agent made the most in sales in 2009?
+      Hint: Use the MAX function on a subquery.
+    * **한글 해석:** 2009년에 가장 많은 매출을 올린 Sales Agent를 조회하는 쿼리를 작성하시오.
+      힌트: 서브쿼리에서 MAX 함수를 사용하시오.
+===============
+SELECT 
+    e.FirstName || ' ' || e.LastName AS SalesAgent,
+    SUM(i.Total) AS TotalSales
+FROM employees e
+JOIN customers c 
+    ON e.EmployeeId = c.SupportRepId
+JOIN invoices i 
+    ON c.CustomerId = i.CustomerId
+WHERE e.Title LIKE '%Sales%'
+  AND e.Title LIKE '%Agent%'
+  AND strftime('%Y', i.InvoiceDate) = '2009'
+GROUP BY e.EmployeeId
+HAVING SUM(i.Total) = (
+    SELECT MAX(SalesSum)
+    FROM (
+        SELECT SUM(i2.Total) AS SalesSum
+        FROM employees e2
+        JOIN customers c2 
+            ON e2.EmployeeId = c2.SupportRepId
+        JOIN invoices i2 
+            ON c2.CustomerId = i2.CustomerId
+        WHERE e2.Title LIKE '%Sales%'
+          AND e2.Title LIKE '%Agent%'
+          AND strftime('%Y', i2.InvoiceDate) = '2009'
+        GROUP BY e2.EmployeeId
+    )
+);
+=========================
+SELECT 
+    e.FirstName || ' ' || e.LastName AS SalesAgent,
+    SUM(i.Total) AS TotalSales
+FROM employees e
+JOIN customers c ON e.EmployeeId = c.SupportRepId
+JOIN invoices i ON c.CustomerId = i.CustomerId
+WHERE e.Title LIKE '%Sales%'
+  AND e.Title LIKE '%Agent%'
+  AND strftime('%Y', i.InvoiceDate) = '2009'
+GROUP BY e.EmployeeId
+ORDER BY TotalSales DESC
+LIMIT 1;
+=======================
+
+20. **top_agent.sql**
+
+    * **Original:** Which sales agent made the most in sales over all?
+    * **한글 해석:** 전체 기간 동안 가장 많은 매출을 올린 Sales Agent를 조회하는 쿼리를 작성하시오.
+SELECT e.firstname ||" "|| e.lastname, SUM(i.total) AS total FROM employees e
+JOIN customers c ON c.SupportRepId = e.EmployeeId 
+JOIN invoices i ON i.CustomerId = c.CustomerId 
+WHERE e.title LIKE "%sales%" AND title LIKE '%agent%'
+GROUP BY e.EmployeeId
+ORDER BY total DESC
+LIMIT 1;
+
+21. **sales_agent_customer_count.sql**
+
+    * **Original:** Provide a query that shows the count of customers assigned to each sales agent.
+    * **한글 해석:** 각 Sales Agent에게 배정된 고객 수를 조회하는 쿼리를 작성하시오.
+SELECT e.firstname ||" "|| e.lastname, COUNT(customerid) AS ctotal FROM employees e
+JOIN customers c ON c.SupportRepId = e.EmployeeId 
+WHERE e.title LIKE "%sales%" AND title LIKE '%agent%'
+GROUP BY e.EmployeeId;
+
+22. **sales_per_country.sql**
+
+    * **Original:** Provide a query that shows the total sales per country.
+    * **한글 해석:** 국가별 총 매출액을 조회하는 쿼리를 작성하시오.
+SELECT billingcountry, SUM(total) FROM invoices GROUP BY billingcountry;
+
+23. **top_country.sql**
+
+    * **Original:** Which country's customers spent the most?
+    * **한글 해석:** 고객들이 가장 많은 금액을 지출한 국가를 조회하는 쿼리를 작성하시오.
+SELECT billingcountry, SUM(total) AS total FROM invoices GROUP BY billingcountry
+ORDER BY total DESC
+LIMIT 1;
+
+24. **top_2013_track.sql**
+
+    * **Original:** Provide a query that shows the most purchased track of 2013.
+    * **한글 해석:** 2013년에 가장 많이 구매된 트랙을 조회하는 쿼리를 작성하시오.
+
+25. **top_5_tracks.sql**
+
+    * **Original:** Provide a query that shows the top 5 most purchased songs.
+    * **한글 해석:** 가장 많이 구매된 상위 5개의 곡을 조회하는 쿼리를 작성하시오.
+
+26. **top_3_artists.sql**
+
+    * **Original:** Provide a query that shows the top 3 best selling artists.
+    * **한글 해석:** 가장 많이 판매된 상위 3명의 아티스트를 조회하는 쿼리를 작성하시오.
+
+27. **top_media_type.sql**
+
+    * **Original:** Provide a query that shows the most purchased Media Type.
+    * **한글 해석:** 가장 많이 구매된 미디어 타입(Media Type)을 조회하는 쿼리를 작성하시오.
