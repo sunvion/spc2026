@@ -10,7 +10,7 @@ user_input = '강아지를 데려올 건데, 이름 후보군을 알려줘.'
 response = requests.post(
     'https://api.openai.com/v1/chat/completions',
     json={
-        'model': 'gpt-3.5-turbo',
+        'model': 'gpt-3.5-turbo', # gpt-4, gpt-4o, gpt-4o-mini, gpt-5 등
         'messages': [
             # {'role': 'system', 'content': 'You are a helpful assistant'},
             # {'role': 'system', 'content': '너는 나를 잘 도와주는 사람이야.'},
