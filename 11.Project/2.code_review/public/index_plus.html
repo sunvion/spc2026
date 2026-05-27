@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코드 취약점 분석기</title>
+</head>
+<body>
+    <h1>코드 취약점 분석기</h1>
+    <form id="codeForm">
+        <textarea id="code" name="code" rows="15" cols="80" placeholder="GitHub URL을 입력하세요."></textarea><br>
+        <input type="checkbox" id="info"> 민감정보(하드코딩된 암호)
+        <input type="checkbox" id="sqli"> SQL Injection
+        <input type="checkbox" id="xss"> XSS
+        <br><br>
+        <button type="submit">분석시작</button>
+    </form>
+    <h2>분석 결과</h2>
+    <pre id="result"><!-- 결과가 출력될 곳 --></pre>
+    <script>
+        document.getElementById('codeForm').addEventListener('submit', async (ev) => {
+            ev.preventDefault();
+            const code = document.getElementById('code').value;
+            const info = document.getElementById('info').checked; 
+            const sqli = document.getElementById('sqli').checked;
+            const xss = document.getElementById('xss').checked;
+            const result = document.getElementById('result');
+
+            // 1. fetch로 POST로 소스 코드 내용을 다 보낸다.
+            // fetch("/api/codecheck")
+            const response = await fetch('/api/codecheck', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                // body: JSON.stringify({code: code}) // 원래 문법은 key, value 각각 써야 하나, JS가 아래처럼 축약 표현을 지원함.
+                body: JSON.stringify({ code, info, sqli, xss })
+            });
+            const data = await response.json();
+            console.log(data);
+
+            // 2. 결과를 받아와서 result에 출력한다.
+            result.innerText = data.result;
+        })
+    </script>
+</body>
+</html>

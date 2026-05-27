@@ -24,7 +24,7 @@
             <label><input type="radio" name="rating" value="5">5</label>
         </div>
 
-        <textarea id="commit" placeholder="후기를 작성해주세요." rows="5" cols="40"></textarea>
+        <textarea id="comment" placeholder="후기를 작성해주세요." rows="5" cols="40"></textarea>
         <button id="send">제출</button>
 
         <!-- 리뷰 영역 -->
@@ -38,5 +38,11 @@
             </div>
         </section>
     </section>
+    <script>
+        document.getElementById('send').addEventListener('click', async () => {
+            const review = document.getElementById('comment').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+        })
+    </script>
 </body>
 </html>
