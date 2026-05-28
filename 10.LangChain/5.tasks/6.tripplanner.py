@@ -27,36 +27,44 @@ def make_chain(role):
     )
 
 # 개발자냐/요리사냐/일반
-code_chain = (
-    RunnableLambda(lambda x: print(">>> 개발자 코드 실행") or x)
-    | make_chain("당신은 파이썬 개발자입니다.")
-)
 cook_chain = (
-    RunnableLambda(lambda x: print(">>> 요리사 코드 실행") or x)
-    | make_chain("당신은 요리 전문가입니다.")
+    RunnableLambda(lambda x: print(">>> 음식 추천 실행") or x)
+    | make_chain("당신은 여행사의 음식 부분 기획 담당자입니다.")
+)
+tour_chain = (
+    RunnableLambda(lambda x: print(">>> 관광지 추천 실행") or x)
+    | make_chain("당신은 여행사의 관광 부분 기획 담당자입니다.")
+)
+hotel_chain = (
+    RunnableLambda(lambda x: print(">>> 호텔 추천 실행") or x)
+    | make_chain("당신은 여행사의 숙소 기획 담당자입니다.")
 )
 general_chain = (
-    RunnableLambda(lambda x: print(">>> 일반 코드 실행") or x)
-    | make_chain("당신은 일반 어시스턴트입니다.")
+    RunnableLambda(lambda x: print(">>> 여행 추천 실행") or x)
+    | make_chain("당신은 배낭 여행자입니다.")
 )
 
 branch = RunnableBranch(
     (
-        lambda x: "파이썬" in x['question'] or '코드' in x['question'],
-        code_chain
+        lambda x: "음식" in x['question'] or '식당' in x['question'] or '음료' in x['question'],
+        cook_chain
     ),
     (
-        lambda x: "요리" in x['question'] or '레시피' in x['question'],
-        cook_chain
+        lambda x: "관광지" in x['question'] or '명소' in x['question'] or '볼만한' in x['question'],
+        tour_chain
+    ),
+    (
+        lambda x: "숙소" in x['question'] or '숙박' in x['question'] or '화장실' in x['question'] or '벌레' in x['question'],
+        hotel_chain
     ),
     general_chain
 )
 
 questions = [
-    "파이썬 리스트 정렬 코드 알려줘.",
-    "김치찌개 레시피 알려줘.",
-    "오늘 날씨 어때?",
-    "된장찌개 파이썬 레시피 알려줘."
+    "태국 방콕 식당 추천해줘.",
+    "서울에서 구경하기 좋은 곳 알려줘",
+    "중국 베이지의 깨끗한 화장실이 있는 숙소 찾아줘.",
+    "여행 가고 싶어. 추천해줘."
 ]
 
 for q in questions:
