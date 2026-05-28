@@ -11,7 +11,8 @@ llm = ChatOpenAI(model='gpt-4o-mini')
 
 @app.route('/')
 def index():
-    return send_from_directory('static', 'index.html')
+    # return send_from_directory('static', 'index.html')
+    return send_from_directory("static", "index_with_design.html")
 
 @app.route('/api/name')
 def name():
@@ -38,15 +39,15 @@ def name2():
     result = llm.invoke(prompt)
     return jsonify({'result': 'success', 'chatbot': result.content})
 
-# @app.route('/api/dinner')
-# def index():
-#     prompt = [
-#         SystemMessage(content='당신은 경력 10년차 호텔 쉐프입니다.'),
-#         HumanMessage(content='오늘 저녁 메뉴를 추천해줘.'),
-#     ]
-#     result = llm.invoke(prompt)
-#     # print(result.content)
-#     return jsonify({'result': 'success', 'chatbot': result.content})
+@app.route('/api/dinner')
+def dinner():
+    prompt = [
+        SystemMessage(content='당신은 경력 10년차 호텔 쉐프입니다.'),
+        HumanMessage(content='오늘 저녁 메뉴를 추천해줘.'),
+    ]
+    result = llm.invoke(prompt)
+    # print(result.content)
+    return jsonify({'result': 'success', 'chatbot': result.content})
 
 if __name__ == '__main__':
     app.run(debug=True)
