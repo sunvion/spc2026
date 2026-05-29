@@ -15,4 +15,8 @@ uploads/
 *.db
 *.sqlite
 *.sqlite3
+chroma_db/
+
+# Data
 history.json
+*.pdf
