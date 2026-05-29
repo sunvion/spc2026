@@ -72,3 +72,47 @@ result = parallel_chain.invoke({
 })
 
 print(result)
+
+# ======================= 강사님 답안 =============================
+from dotenv import load_dotenv
+
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+from langchain_core.runnables import RunnableParallel
+
+load_dotenv()
+
+llm = ChatOpenAI(model='gpt-4o-mini')
+
+# chain이란? prompt | llm | parser
+prompt1 = ChatPromptTemplate.from_messages('다음 뉴스를 2~3문장으로 요약해줘.\n\n{news}')
+
+summary_chain = prompt1 | llm | StrOutputParser()
+
+sentiment_chain = (
+    ChatPromptTemplate.from_messages('다음 뉴스의 전반적 감성을 한 단어로 분석해줘 (긍정/부정/중립).\n\n{news}')
+    | llm
+    | StrOutputParser()
+    )
+
+category_chain = (
+    ChatPromptTemplate.from_messages('다음 뉴스의 카테고리를 한 단어로 분석해줘 (정치/경제/사회/IT/스포츠/기타).\n\n{news}')
+    | llm
+    | StrOutputParser()
+    )
+
+final_chain = RunnableParallel({
+    "summary": summary_chain,
+    "sentiment": sentiment_chain,
+    "category": category_chain
+})
+
+news = "뉴스 구해서 추가하기"
+
+result = final_chain.invoke({'news': news})
+print(f"원문: {news}")
+print(f"요약: {result["summary"]}")
+print(f"감성: {result["sentiment"]}")
+print(f"카테고리: {result['category']}")
