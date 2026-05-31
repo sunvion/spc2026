@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>메모리 챗봇</title>
+<style>
+
+body{
+    width:800px;
+    margin:auto;
+    font-family:Arial;
+}
+
+#chat{
+    height:500px;
+    border:1px solid #ccc;
+    overflow-y:auto;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+.user{
+    margin:10px 0;
+}
+
+.ai{
+    margin:10px 0;
+}
+
+</style>
+</head>
+<body>
+
+<h1>메모리 챗봇</h1>
+
+<div id="chat"></div>
+
+<input
+    type="text"
+    id="message"
+    placeholder="메시지를 입력하세요."
+    style="width:700px;"
+>
+
+<button id="sendBtn">
+    전송
+</button>
+
+<script>
+
+const chat = document.querySelector('#chat');
+const input = document.querySelector('#message');
+const btn = document.querySelector('#sendBtn');
+
+btn.addEventListener('click', sendMessage);
+
+async function sendMessage(){
+
+    const message = input.value;
+
+    if(!message){
+        return;
+    }
+
+    chat.innerHTML += `
+        <div class="user">
+            👤 ${message}
+        </div>
+    `;
+
+    input.value = '';
+
+    const response = await fetch('/api/chat', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            message:message
+        })
+    });
+
+    const data = await response.json();
+
+    chat.innerHTML += `
+        <div class="ai">
+            🤖 ${data.answer}
+        </div>
+    `;
+
+    chat.scrollTop = chat.scrollHeight;
+}
+
+</script>
+
+</body>
+</html>
