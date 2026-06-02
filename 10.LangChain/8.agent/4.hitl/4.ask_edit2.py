@@ -62,7 +62,8 @@ else:
     # result = agent.invoke(None, config=config)
     # print(f"[최종] {result['messages'][-1].content}")
 
-    result = agent.invoke(None, config=config) # 할일을 계속 이어서 하시오.
+    result = agent.invoke(None, config=config) # 할일을 계속 이어서 하시오. 
+    # 할일을 이어서 하시오. (말없이 끝 or 최종 결론을 재요약할 수도 있음)
     final = result["messages"][-1].content
     if not final:
         final = result["messages"][-2].content
