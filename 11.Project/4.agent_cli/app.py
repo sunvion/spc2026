@@ -1,8 +1,14 @@
 # 금융 도우미 에이전트 챗봇 만들기
 
 # 랭체인들을 불러온다.
+from langchain_openai import ChatOpenAI
+from langchain.agents import create_tool_calling_agent
+from langchain.agents import AgentExecutor
+from langchain_core.prompts import ChatPromptTemplate
 
 from fin_tools import TOOLS
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 SYSTEM = """
 당신은 금융 정보 비서입니다. ...을 하는 ...
