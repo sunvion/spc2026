@@ -20,3 +20,6 @@ chroma_db/
 # Data
 history.json
 *.pdf
+
+# 임시 파일
+TEMP/
