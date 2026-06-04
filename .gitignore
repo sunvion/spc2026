@@ -20,6 +20,8 @@ chroma_db/
 # Data
 history.json
 *.pdf
+*.mp3
+*.wav
 
 # 임시 파일
 TEMP/
