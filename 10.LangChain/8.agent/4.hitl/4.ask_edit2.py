@@ -43,11 +43,11 @@ print(f"[에이전트 제안] {call['name']} ({call['args']})")
 # 2. 해당 상태를 어떻게 처리할 건지, 사용자에게 물어보기
 print(f"\n{args['recipient']}에게 송금을 진행하시겠습니까?")
 print("  1. 예(송금)")
-print("  1. 아니오(취소)")
-print("  1. 금액 수정")
+print("  2. 아니오(취소)")
+print("  3. 금액 수정")
 choice = input("선택 (1/2/3): ").strip()
 
-if choice == "2":
+if choice == "2":s
     print("\n[취소] 사용자 요청에 의해 취소되었습니다.")
 else:
     if choice == "3":
